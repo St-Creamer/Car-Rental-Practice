@@ -21,7 +21,8 @@ namespace ConsoleTest
                case 1 :
                     {
                         Car car = new Car();
-                        car.AddCar(car);
+                        CarHelper carHelper = new CarHelper();
+                        carHelper.AddCar(car);
                         break;
                     }
                 case 2 :
@@ -41,7 +42,7 @@ namespace ConsoleTest
                         Console.WriteLine("type car id");
                         int id = int.Parse(Console.ReadLine());
                         string json = File.ReadAllText(@"c:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\Cars.json");
-                        
+                     
                         var cars = JsonConvert.DeserializeObject<List<Car>>(json);
                         foreach(var car in cars)
                         {

@@ -1,12 +1,1 @@
-{
-  "Id": 1,
-  "brand": "1",
-  "colour": "1",
-  "milage": 1
-}
-{
-  "Id": 2,
-  "brand": "2",
-  "colour": "2",
-  "milage": 2
-}
+[{"Id":1,"brand":"1","colour":"1","milage":1}]
