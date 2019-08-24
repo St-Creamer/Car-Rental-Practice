@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ConsoleTest
 {
@@ -31,15 +32,21 @@ namespace ConsoleTest
             Console.WriteLine("Enter Car Milage Or \"n\" if not needed");
 
             string x = Console.ReadLine();
-            if (x != "n")
+            if (!Regex.IsMatch(x, @"^[a-zA-Z]+$"))
             {
                 this.milage = int.Parse(x);
             }
-            using (StreamWriter file = File.AppendText(@"c:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\Cars.json"))
+
+
+            string json = JsonConvert.SerializeObject(this, Formatting.Indented);
+
+
+            using (StreamWriter sw = File.AppendText(@"c:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\Cars.json"))
             {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(file, this);
+                sw.WriteLine(json);
+
             }
+
         }
 
 
