@@ -1,0 +1,11 @@
+C:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\bin\Debug\netcoreapp2.2\ConsoleTest.deps.json
+C:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\bin\Debug\netcoreapp2.2\ConsoleTest.runtimeconfig.json
+C:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\bin\Debug\netcoreapp2.2\ConsoleTest.runtimeconfig.dev.json
+C:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\bin\Debug\netcoreapp2.2\ConsoleTest.dll
+C:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\bin\Debug\netcoreapp2.2\ConsoleTest.pdb
+C:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\obj\Debug\netcoreapp2.2\ConsoleTest.csprojAssemblyReference.cache
+C:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\obj\Debug\netcoreapp2.2\ConsoleTest.csproj.CoreCompileInputs.cache
+C:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\obj\Debug\netcoreapp2.2\ConsoleTest.AssemblyInfoInputs.cache
+C:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\obj\Debug\netcoreapp2.2\ConsoleTest.AssemblyInfo.cs
+C:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\obj\Debug\netcoreapp2.2\ConsoleTest.dll
+C:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\obj\Debug\netcoreapp2.2\ConsoleTest.pdb
