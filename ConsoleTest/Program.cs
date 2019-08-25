@@ -67,7 +67,7 @@ namespace ConsoleTest
                         }
                         if (!x)
                         {
-                            Console.WriteLine("Car not found");
+                            Console.WriteLine("Car not found Try Again");
                         }
                             Console.WriteLine("\n");
                             break;
@@ -77,23 +77,24 @@ namespace ConsoleTest
 
                         Console.WriteLine("type car id");
                         int id = int.Parse(Console.ReadLine());
-                            int index = -1;
-                         cars = CarHelper.RetrieveCars();
-                        foreach (var item in cars)
-                        {
-                            if (item.Id == id)
-                            {index = cars.IndexOf(item);}
-                            else
-                            {Console.WriteLine("car not found");}
-                            if(index != -1)
-                            {
-                                 cars.Remove(item);
-                                 Console.WriteLine("Car with id:" + id + " has been removed");
+                        
+                        cars = CarHelper.RetrieveCars();
 
+                            Car item = cars.Find(x => x.Id == id);
+                            if(item != null)
+                            {
+                                cars.Remove(item);
+                                Console.WriteLine("Car with id:" + id + " has been removed");
                             }
-                             CarHelper.SendListToFile(cars);
-                        }
-                       
+                            else
+                            {
+                                Console.WriteLine("Car Not Found Try Again");
+                            }
+                                
+
+                            
+                            CarHelper.SendListToFile(cars);
+
                             Console.WriteLine("\n");
                             break;
                     }
