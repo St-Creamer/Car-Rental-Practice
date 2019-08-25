@@ -12,28 +12,27 @@ namespace ConsoleTest
             Console.WriteLine("1. add a car");
             Console.WriteLine("2. show all cars");
             Console.WriteLine("3. search for a car");
+            Console.WriteLine("4. Edit an existing car");
             int answer = int.Parse(Console.ReadLine());
-            
 
-            
-            
+
+            Car car = new Car();
+            var cars = new List<Car>();
+
             switch (answer){
                case 1 :
                     {
-                        Car car = new Car();
-                        CarHelper carHelper = new CarHelper();
-                        carHelper.AddCar(car);
+                        
+                        CarHelper.AddCar(car);
                         break;
                     }
                 case 2 :
                     {
-                        string cars = File.ReadAllText(@"c:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\Cars.json");
-                        Console.WriteLine(cars);
-                        //using (StreamReader file = File.OpenText(@"c:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\Cars.json"))
-                        //{
-                        //    JsonSerializer serializer = new JsonSerializer();
-                        //    Car car = (Car)serializer.Deserialize(file, typeof(Car));
-                        //}
+                         cars = CarHelper.RetrieveCars();
+                        foreach(var item in cars)
+                        {
+                            Console.WriteLine("Car Id: " + item.Id + "\n Car Brand: " + item.brand + "\n Car Milage :" + item.milage.ToString());
+                        }
                         break;
 
                     }
@@ -41,16 +40,15 @@ namespace ConsoleTest
                     {
                         Console.WriteLine("type car id");
                         int id = int.Parse(Console.ReadLine());
-                        string json = File.ReadAllText(@"c:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\Cars.json");
-                     
-                        var cars = JsonConvert.DeserializeObject<List<Car>>(json);
-                        foreach(var car in cars)
+                         cars = CarHelper.RetrieveCars();
+                        foreach(var item in cars)
                         {
-                            if (car.Id == id)
+                            if (item.Id == id)
                             {
                                 Console.WriteLine("found car");
-                                Console.WriteLine(car.brand);
-                                Console.WriteLine(car.colour);
+                                Console.WriteLine("car brand : "+item.brand);
+                                Console.WriteLine("car colour :"+item.colour);
+                                Console.WriteLine("car milage :"+item.milage.ToString());
 
                             }
                             else
@@ -59,6 +57,32 @@ namespace ConsoleTest
                             }
                         }
                         
+                        break;
+                    }
+                case 4:
+                    {
+
+                        Console.WriteLine("type car id");
+                        int id = int.Parse(Console.ReadLine());
+
+                         cars = CarHelper.RetrieveCars();
+                        foreach (var item in cars)
+                        {
+                            if (item.Id == id)
+                            {
+                                
+                                cars.Remove(item);
+                                Console.WriteLine("Car with id" + id + " has been removed");
+                                CarHelper.SendListToFile(cars);
+                                
+
+                            }
+                            else
+                            {
+                                Console.WriteLine("car not found");
+                            }
+                        }
+
                         break;
                     }
             }
