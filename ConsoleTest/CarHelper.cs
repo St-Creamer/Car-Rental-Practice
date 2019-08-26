@@ -9,11 +9,13 @@ namespace ConsoleTest
 {
     class CarHelper
     {
+
+        //gets the list of cars from the json file
         public static List<Car> RetrieveCars()
         {
             
             string json = File.ReadAllText(@"c:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\Cars.json");
-            if(json == "")
+            if(json == "" || json == "[]")
             {
                 var cars = new List<Car>();
                 return cars;
@@ -23,25 +25,19 @@ namespace ConsoleTest
                 var retrievedlist = JsonConvert.DeserializeObject<List<Car>>(json);
                 return retrievedlist;
             }
-            
         }
+
+        //sends the list of cars to the json fole
         public static void SendListToFile(List<Car> cars)
         {
-            if (!File.Exists(@"c:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\Cars.json"))
-            {
-
-
-                File.Create(@"c:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\Cars.json");
-            }
-           
             string json = JsonConvert.SerializeObject(cars);
-            using (StreamWriter sw = File.CreateText(@"c:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\Cars.json"))
-             {
+            using (StreamWriter sw = File.CreateText(Program.appPath))
+            {
                 sw.WriteLine(json);
-             }
-            
+            }
         }
 
+        //adds a car to the json file
         public static void AddCar(Car car)
         {
             Console.WriteLine("Enter Car Id");
@@ -53,25 +49,14 @@ namespace ConsoleTest
             Console.WriteLine("Enter Car Colour");
             car.colour = Console.ReadLine();
 
-            Console.WriteLine("Enter Car Milage Or \"n\" if not needed");
+            Console.WriteLine("Enter Car Milage");
+            car.milage = int.Parse(Console.ReadLine());
 
-            string x = Console.ReadLine();
-            if (!Regex.IsMatch(x, @"^[a-zA-Z]+$"))
-            {
-                car.milage = int.Parse(x);
-            }
+            if (!File.Exists(Program.appPath))
+                File.Create(Program.appPath);
 
-            if (!File.Exists(@"c:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\Cars.json"))
-            {
-                File.Create(@"c:\Users\RIP\Desktop\c# console\ConsoleTest\ConsoleTest\Cars.json");
-               
-            }
-
-            var cars = new List<Car>();
-            cars = CarHelper.RetrieveCars();
-
+            var cars = CarHelper.RetrieveCars();
             cars.Add(car);
-
             CarHelper.SendListToFile(cars);
 
         }

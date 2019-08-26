@@ -14,6 +14,5 @@ namespace ConsoleTest
         public string colour { get; set; }
         public int milage { get; set; }
 
-
     }
 }
