@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -12,9 +13,7 @@ namespace ConsoleTest
         public static string appPath = Directory.GetCurrentDirectory();
         static void Main(string[] args)
         {
-            
-            Console.WriteLine("GetFolderPath: {0}",
-                 appPath);
+            Console.WriteLine("GetFolderPath: {0}",appPath);
             bool run = true;
             while (run)
             {
@@ -23,77 +22,139 @@ namespace ConsoleTest
                 Console.WriteLine("2. show all cars");
                 Console.WriteLine("3. search for a car");
                 Console.WriteLine("4. Delete a car");
-                Console.WriteLine("6. to quit");
+                Console.WriteLine("6. Update a car ");
                 Console.WriteLine("###################################");
                 int answer = int.Parse(Console.ReadLine());
-                Console.WriteLine("\n");
                 //declaring the car obj and the cars list for later use
                 Car car = new Car();
                 var cars = new List<Car>();
 
-                switch (answer){
+                switch (answer)
+                {
                     case 1 :
-                    {
-                        CarHelper.AddCar(car);
-                        Console.WriteLine("\n");
-                        break;
-                    }
-                    case 2 :
-                    {
-                        cars = CarHelper.RetrieveCars();
-                        foreach(var item in cars)
                         {
-                            Console.WriteLine("Car Id: " + item.Id + "\n Car Brand: " + item.brand + "\n Car Milage: " + item.milage.ToString());
-                        }
-                        Console.WriteLine("\n");
-                        break;
-                    }
-                    case 3:
-                    {
-                        Console.WriteLine("type car id");
-                        int id = int.Parse(Console.ReadLine());
-                        cars = CarHelper.RetrieveCars();
-                        bool x = false;
-                        foreach(var item in cars)
-                        {
-                            if (item.Id == id)
-                            {
-                                x = true;
-                                Console.WriteLine("found car");
-                                Console.WriteLine("car brand : "+item.brand);
-                                Console.WriteLine("car colour :"+item.colour);
-                                Console.WriteLine("car milage :"+item.milage.ToString());
-                            }
-                           
-                        }
-                        if (!x)
-                        {
-                            Console.WriteLine("Car not found Try Again");
-                        }
-                        Console.WriteLine("\n");
-                        break;
-                    }
-                    case 4:
-                    {
+                            Console.WriteLine("Enter Car Id");
+                            car.Id = int.Parse(Console.ReadLine());
 
-                        Console.WriteLine("type car id");
-                        int id = int.Parse(Console.ReadLine());
-                        cars = CarHelper.RetrieveCars();
-                        Car item = cars.Find(x => x.Id == id);
-                        if(item != null)
-                        {
-                            cars.Remove(item);
-                            Console.WriteLine("Car with id:" + id + " has been removed");
+                            Console.WriteLine("Enter Car Brand");
+                            car.brand = Console.ReadLine();
+
+                            Console.WriteLine("Enter Car Colour");
+                            car.colour = Console.ReadLine();
+
+                            Console.WriteLine("Enter Car Milage");
+                            car.milage = int.Parse(Console.ReadLine());
+
+                            if (!File.Exists(appPath + @"\Cars.json"))
+                            {
+                                var jsonfile = File.Create(appPath + @"\Cars.json");
+                                jsonfile.Close();
+                            }
+                                
+                            cars = CarHelper.RetrieveCars();
+                            cars.Add(car);
+                            CarHelper.SendListToFile(cars);
+                            cars.Clear();
+                            break;
                         }
-                        else
+                    case 2 :
                         {
-                            Console.WriteLine("Car Not Found Try Again");
+                            cars = CarHelper.RetrieveCars();
+                            foreach (var item in cars)
+                            {
+                                Console.WriteLine("\nCar Id: " + item.Id + "\nCar Brand: " + item.brand+"\nCar Colour: "+item.colour + "\nCar Milage: " + item.milage.ToString());
+                            }
+                            Console.WriteLine("\n");
+                            cars.Clear();
+                            break;
                         }
-                        CarHelper.SendListToFile(cars);
-                        Console.WriteLine("\n");
-                        break;
-                    }
-                    case 6: { run = false; break; }  
+                    case 3:
+                        {
+                            Console.WriteLine("type car id");
+                            int id = int.Parse(Console.ReadLine());
+                            cars = CarHelper.RetrieveCars();
+                            bool x = false;
+                            foreach (var item in cars)
+                            {
+                                if (item.Id == id)
+                                {
+                                    x = true;
+                                    Console.WriteLine("found car");
+                                    Console.WriteLine("car brand : " + item.brand);
+                                    Console.WriteLine("car colour :" + item.colour);
+                                    Console.WriteLine("car milage :" + item.milage.ToString());
+                                }
+
+                            }
+                            if (!x)
+                            {
+                                Console.WriteLine("Car not found Try Again");
+                            }
+                            Console.WriteLine("\n");
+                            cars.Clear();
+                            break;
+                        }
+                    case 4:
+                        {
+                            Console.WriteLine("type car id");
+                            int id = int.Parse(Console.ReadLine());
+                            cars = CarHelper.RetrieveCars();
+                            Car item = cars.Find(x => x.Id == id);
+                            if (item != null)
+                            {
+                                cars.Remove(item);
+                                Console.WriteLine("Car with id:" + id + " has been removed");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Car Not Found Try Again");
+                            }
+                            CarHelper.SendListToFile(cars);
+                            Console.WriteLine("\n");
+                            cars.Clear();
+                            break;
+                        }
+                    case 6:
+                        {
+                            Console.WriteLine("search for :");
+                            int id = int.Parse(Console.ReadLine());
+                            cars = CarHelper.RetrieveCars();
+                            int index = -1;
+                            foreach (var item in cars)
+                            {
+                                if (item.Id == id)
+                                {
+                                    index = cars.IndexOf(item); 
+                                }
+                            }
+                            if(index != -1)
+                            {
+                               
+                                car.Id = id;
+                                Console.WriteLine("Type new Brand");
+                                car.brand = Console.ReadLine();
+                                Console.WriteLine("Type new Colour");
+                                car.colour = Console.ReadLine();
+                                Console.WriteLine("Type new Milage");
+                                car.milage = int.Parse(Console.ReadLine());
+                                cars.Insert(index, car);
+                                cars.RemoveAt(index + 1);
+                                CarHelper.SendListToFile(cars);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Car Not Found");
+                            }
+                            
+                            cars.Clear();
+                            break;
+                        }
+                    default:
+                        {
+                            Console.WriteLine("Something went wrong");
+                            break;
+                        }
+                        
                 }
             }
         }
