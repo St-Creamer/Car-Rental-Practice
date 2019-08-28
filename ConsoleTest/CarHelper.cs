@@ -12,22 +12,33 @@ namespace ConsoleTest
         //gets the list of cars from the json file
         public static List<Car> RetrieveCars()
         {
-            string json = File.ReadAllText(Program.appPath+ @"\Cars.json");
-            if(json == "" || json == "[]")
+            var  json="[]";
+
+            try
             {
-                var cars = new List<Car>();
-                return cars;
+                 json = File.ReadAllText(Program.appPath + @"\Cars.json");
             }
-            else
+            catch (FileNotFoundException)
             {
-                var retrievedlist = JsonConvert.DeserializeObject<List<Car>>(json);
-                return retrievedlist;
+                using (StreamWriter sw = File.CreateText(Program.appPath+@"\Cars.json"))
+                {
+                    sw.WriteLine("[]");
+                }
             }
+
+            var retrievedlist = JsonConvert.DeserializeObject<List<Car>>(json);
+
+            if (retrievedlist.Count == 0)
+            {
+                Console.WriteLine("Car list is empty please add a car");
+            }
+            return retrievedlist;
         }
         //sends the list of cars to the json fole
         public static void SendListToFile(List<Car> cars)
         {
             string json = JsonConvert.SerializeObject(cars);
+
             using (StreamWriter sw = File.CreateText(Program.appPath + @"\Cars.json"))
             {
                 sw.WriteLine(json);
