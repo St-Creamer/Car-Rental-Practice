@@ -29,9 +29,10 @@ namespace ConsoleTest
                     Console.WriteLine("3. search for a car");
                     Console.WriteLine("4. Delete a car");
                     Console.WriteLine("6. Update a car ");
+                    Console.WriteLine("6. Quit ");
                     Console.WriteLine("###################################");
                     valid = int.TryParse(Console.ReadLine(), out answer);
-                    if ((answer < 1 || answer > 6) && valid == false)
+                    if ((answer < 1 || answer > 7) && valid == false)
                     {
                         valid = false;
                         Console.WriteLine("Please enter a number between 1 and 6");
@@ -159,6 +160,10 @@ namespace ConsoleTest
                                 }
 
                                 cars.Clear();
+                                break;
+                            }
+                        case 7:
+                            {
                                 break;
                             }
                         default:
