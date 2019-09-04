@@ -1,10 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ConsoleTest
 {
@@ -19,7 +15,9 @@ namespace ConsoleTest
             {
                 //input control
                 bool valid = true;
+
                 int answer = -1;
+
                 while (valid)
                 {
                     //menu
@@ -40,6 +38,7 @@ namespace ConsoleTest
 
                     //declaring the car obj and the cars list for later use
                     Car car = new Car();
+
                     var cars = new List<Car>();
 
                     switch (answer)
@@ -65,37 +64,48 @@ namespace ConsoleTest
                                 //}
 
                                 cars = CarHelper.RetrieveCars();
+
                                 cars.Add(car);
+
                                 CarHelper.SendListToFile(cars);
+
                                 cars.Clear();
+
                                 break;
                             }
                         case 2:
                             {
                                 cars = CarHelper.RetrieveCars();
+
                                 foreach (var item in cars)
                                 {
-                                    Console.WriteLine("\nCar Id: " + item.Id + "\nCar Brand: " + item.brand + "\nCar Colour: " + item.colour + "\nCar Milage: " + item.milage.ToString());
+                                    Console.WriteLine(item.FullInfo);
                                 }
+
                                 Console.WriteLine("\n");
+
                                 cars.Clear();
+
                                 break;
                             }
                         case 3:
                             {
                                 cars = CarHelper.RetrieveCars();
+
                                 Console.WriteLine("type car id:");
+
                                 int id = int.Parse(Console.ReadLine());
+
                                 bool x = false;
+
                                 foreach (var item in cars)
                                 {
                                     if (item.Id == id)
                                     {
                                         x = true;
                                         Console.WriteLine("found car");
-                                        Console.WriteLine("car brand : " + item.brand);
-                                        Console.WriteLine("car colour :" + item.colour);
-                                        Console.WriteLine("car milage :" + item.milage.ToString());
+
+                                        Console.WriteLine(item.FullInfo); ;
                                     }
 
                                 }
@@ -104,18 +114,25 @@ namespace ConsoleTest
                                     Console.WriteLine("Car not found Try Again");
                                 }
                                 Console.WriteLine("\n");
+
                                 cars.Clear();
+
                                 break;
                             }
                         case 4:
                             {
                                 cars = CarHelper.RetrieveCars();
+
                                 Console.WriteLine("type car id:");
+
                                 int id = int.Parse(Console.ReadLine());
+
                                 Car item = cars.Find(x => x.Id == id);
+
                                 if (item != null)
                                 {
                                     cars.Remove(item);
+
                                     Console.WriteLine("Car with id:" + id + " has been removed");
                                 }
                                 else
@@ -123,16 +140,23 @@ namespace ConsoleTest
                                     Console.WriteLine("Car Not Found Try Again");
                                 }
                                 CarHelper.SendListToFile(cars);
+
                                 Console.WriteLine("\n");
+
                                 cars.Clear();
+
                                 break;
                             }
                         case 6:
                             {
                                 cars = CarHelper.RetrieveCars();
+
                                 Console.WriteLine("search by id:");
+
                                 int id = int.Parse(Console.ReadLine());
+
                                 int index = -1;
+
                                 foreach (var item in cars)
                                 {
                                     if (item.Id == id)
@@ -144,14 +168,20 @@ namespace ConsoleTest
                                 {
 
                                     car.Id = id;
+
                                     Console.WriteLine("Type new Brand");
                                     car.brand = Console.ReadLine();
+
                                     Console.WriteLine("Type new Colour");
                                     car.colour = Console.ReadLine();
+
                                     Console.WriteLine("Type new Milage");
                                     car.milage = int.Parse(Console.ReadLine());
+
                                     cars.Insert(index, car);
+
                                     cars.RemoveAt(index + 1);
+
                                     CarHelper.SendListToFile(cars);
                                 }
                                 else
@@ -160,6 +190,7 @@ namespace ConsoleTest
                                 }
 
                                 cars.Clear();
+
                                 break;
                             }
                         case 7:
@@ -169,6 +200,7 @@ namespace ConsoleTest
                         default:
                             {
                                 Console.WriteLine("Something went wrong");
+
                                 break;
                             }
 
